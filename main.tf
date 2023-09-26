@@ -19,9 +19,9 @@ provider "aws" {
 
 #creating ec2 instances 
 
-resource "aws_launch_template" "creativeHub_launch_template" {
+resource "aws_launch_template" "applova_launch_template" {
 
-	name = "creativeHub-launch-template"
+	name = "applova-launch-template"
 
   	image_id =  var.aws_ami
   	instance_type = var.instance_type
@@ -44,6 +44,6 @@ resource "aws_launch_template" "creativeHub_launch_template" {
 
   	network_interfaces {
     	associate_public_ip_address = true
-    	security_groups = [aws_security_group.creativeHub-web_SG.id]
+    	security_groups = [aws_security_group.applova-web_SG.id]
   	}
 }

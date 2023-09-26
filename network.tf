@@ -1,17 +1,17 @@
 #Defining VPC
 
-resource "aws_vpc" "creativeHub_vpc" {
+resource "aws_vpc" "applova_vpc" {
   cidr_block = "10.0.0.0/16"
   
   tags = {
-    Name = "creativeHub-vpc"
+    Name = "applova-vpc"
   }
 }
 
 #Defining Subnets
 
-resource "aws_subnet" "creativeHub_subnet_1" {
-  vpc_id     = aws_vpc.creativeHub_vpc.id
+resource "aws_subnet" "applova_subnet_1" {
+  vpc_id     = aws_vpc.applova_vpc.id
   cidr_block = "10.0.1.0/24"
   availability_zone = "us-east-1a"
 
@@ -20,8 +20,8 @@ resource "aws_subnet" "creativeHub_subnet_1" {
   }
 }
 
-resource "aws_subnet" "creativeHub_subnet_2" {
-  vpc_id     = aws_vpc.creativeHub_vpc.id
+resource "aws_subnet" "applova_subnet_2" {
+  vpc_id     = aws_vpc.applova_vpc.id
   cidr_block = "10.0.2.0/24"
   availability_zone = "us-east-1b"
 
@@ -30,8 +30,8 @@ resource "aws_subnet" "creativeHub_subnet_2" {
   }
 }
 
-resource "aws_subnet" "creativeHub_subnet_3" {
-  vpc_id     = aws_vpc.creativeHub_vpc.id
+resource "aws_subnet" "applova_subnet_3" {
+  vpc_id     = aws_vpc.applova_vpc.id
   cidr_block = "10.0.3.0/24"
   availability_zone = "us-east-1c"
 
@@ -42,44 +42,44 @@ resource "aws_subnet" "creativeHub_subnet_3" {
 
 #Defining Internet Gateways
 
-resource "aws_internet_gateway" "creativeHub_igw" {
-  vpc_id = aws_vpc.creativeHub_vpc.id
+resource "aws_internet_gateway" "applova_igw" {
+  vpc_id = aws_vpc.applova_vpc.id
 
   tags = {
-    Name = "creativeHub-igw"
+    Name = "applova-igw"
   }
 }
 
 #Defining Route Table
 
-resource "aws_route_table" "creativeHub_rt" {
-  vpc_id = aws_vpc.creativeHub_vpc.id
+resource "aws_route_table" "applova_rt" {
+  vpc_id = aws_vpc.applova_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.creativeHub_igw.id
+    gateway_id = aws_internet_gateway.applova_igw.id
   }
 
   tags = {
-    Name = "creativeHub_rt"
+    Name = "applova_rt"
   }
 }
 
 #Defining Route Table Association
 
-resource "aws_route_table_association" "creativeHub_TA_1" {
-  subnet_id      = aws_subnet.creativeHub_subnet_1.id
-  route_table_id = aws_route_table.creativeHub_rt.id
+resource "aws_route_table_association" "applova_TA_1" {
+  subnet_id      = aws_subnet.applova_subnet_1.id
+  route_table_id = aws_route_table.applova_rt.id
 }
 
-resource "aws_route_table_association" "creativeHub_TA_2" {
-  subnet_id      = aws_subnet.creativeHub_subnet_2.id
-  route_table_id = aws_route_table.creativeHub_rt.id
+resource "aws_route_table_association" "applova_TA_2" {
+  subnet_id      = aws_subnet.applova_subnet_2.id
+  route_table_id = aws_route_table.applova_rt.id
 }
 
-resource "aws_route_table_association" "creativeHub_TA_3" {
-  subnet_id      = aws_subnet.creativeHub_subnet_3.id
-  route_table_id = aws_route_table.creativeHub_rt.id
+resource "aws_route_table_association" "applova_TA_3" {
+  subnet_id      = aws_subnet.applova_subnet_3.id
+  route_table_id = aws_route_table.applova_rt.id
 }
 
 

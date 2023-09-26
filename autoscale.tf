@@ -1,17 +1,17 @@
 #Defining Autoscaling group
 
-resource "aws_autoscaling_group" "creativehub_asg" {
-  name                      = "creativehub-asg"
+resource "aws_autoscaling_group" "applova_asg" {
+  name                      = "applova-asg"
   max_size                  = 5
   min_size                  = 2
   health_check_type         = "ELB"    # optional
   desired_capacity          = 2
-  target_group_arns = [aws_lb_target_group.creativehub_tg.arn]
+  target_group_arns = [aws_lb_target_group.applova_tg.arn]
 
-  vpc_zone_identifier       = [aws_subnet.creativeHub_subnet_1.id, aws_subnet.creativeHub_subnet_2.id, aws_subnet.creativeHub_subnet_3.id]
+  vpc_zone_identifier       = [aws_subnet.applova_subnet_1.id, aws_subnet.applova_subnet_2.id, aws_subnet.applova_subnet_3.id]
   
   launch_template {
-    id      = aws_launch_template.creativeHub_launch_template.id
+    id      = aws_launch_template.applova_launch_template.id
     version = "$Latest"
   }
 }
@@ -21,7 +21,7 @@ resource "aws_autoscaling_group" "creativehub_asg" {
 resource "aws_autoscaling_policy" "scale_up" {
   name                   = "scale_up"
   policy_type            = "SimpleScaling"
-  autoscaling_group_name = aws_autoscaling_group.creativehub_asg.name
+  autoscaling_group_name = aws_autoscaling_group.applova_asg.name
   adjustment_type        = "ChangeInCapacity"
   scaling_adjustment     = "1"      # add one instance
   cooldown               = "30"    # cooldown period after scaling
@@ -40,7 +40,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_up_alarm" {
   statistic           = "Average"
   threshold           = "50"
   dimensions = {
-    "AutoScalingGroupName" = aws_autoscaling_group.creativehub_asg.name
+    "AutoScalingGroupName" = aws_autoscaling_group.applova_asg.name
   }
   actions_enabled = true
   alarm_actions   = [aws_autoscaling_policy.scale_up.arn]
@@ -50,7 +50,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_up_alarm" {
 
 resource "aws_autoscaling_policy" "scale_down" {
   name                   = "asg-scale-down"
-  autoscaling_group_name = aws_autoscaling_group.creativehub_asg.name
+  autoscaling_group_name = aws_autoscaling_group.applova_asg.name
   adjustment_type        = "ChangeInCapacity"
   scaling_adjustment     = "-1"
   cooldown               = "30"
@@ -70,7 +70,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_down_alarm" {
   statistic           = "Average"
   threshold           = "30"
   dimensions = {
-    "AutoScalingGroupName" = aws_autoscaling_group.creativehub_asg.name
+    "AutoScalingGroupName" = aws_autoscaling_group.applova_asg.name
   }
   actions_enabled = true
   alarm_actions   = [aws_autoscaling_policy.scale_down.arn]

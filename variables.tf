@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "profile" {
  type        = string
  description = "Profile for configurations"
- default     = "CreativeHub-Profile"
+ default     = "applova-Profile"
 }
 
 variable "aws_ami" {

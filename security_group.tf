@@ -1,7 +1,7 @@
 #Defining security group for ec2 instances
 
-resource "aws_security_group" "creativeHub-web_SG" {
-  	name = "creativeHub-web_SG"
+resource "aws_security_group" "applova-web_SG" {
+  	name = "applova-web_SG"
 
   	ingress {
     	from_port   = 80
@@ -24,11 +24,11 @@ resource "aws_security_group" "creativeHub-web_SG" {
    	cidr_blocks = ["0.0.0.0/0"]
   	}
 
-	vpc_id = aws_vpc.creativeHub_vpc.id
+	vpc_id = aws_vpc.applova_vpc.id
 	
-	depends_on = [aws_vpc.creativeHub_vpc]
+	depends_on = [aws_vpc.applova_vpc]
 
 	tags = {
-    		Name = "creativeHub-web_SG"
+    		Name = "applova-web_SG"
   	}
 }
